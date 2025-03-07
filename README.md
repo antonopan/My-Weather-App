@@ -1,3 +1,4 @@
-My Weather App
+# MY WEATHER APP
+___
 
-Using the https://open-meteo.com/ API
+My weather app is a simple app that shows your local weather. It is built in the kotlin programming language and uses the [Open Meteo](https://open-meteo.com/) API.
