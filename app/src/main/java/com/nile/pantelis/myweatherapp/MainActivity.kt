@@ -11,6 +11,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.nile.pantelis.myweatherapp.data.Demo
+import com.nile.pantelis.myweatherapp.data.Wmo
 import com.nile.pantelis.myweatherapp.ui.theme.MyWeatherAppTheme
 
 class MainActivity : ComponentActivity() {
@@ -21,7 +23,7 @@ class MainActivity : ComponentActivity() {
             MyWeatherAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     Greeting(
-                        name = "Android",
+                        name = Wmo.codes[Demo.weatherResponse.daily.weather_code[0]]!!,
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
