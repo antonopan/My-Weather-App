@@ -16,6 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.nile.pantelis.myweatherapp.R
 import com.nile.pantelis.myweatherapp.data.Demo
 import com.nile.pantelis.myweatherapp.data.Wmo
@@ -44,13 +45,18 @@ fun WeatherDataView(
             modifier = Modifier.size(if (showCode) {
                 72.dp
             } else {
-                24.dp
+                22.dp
             })
 
         )
         Text(
             text = Demo.weatherResponse.current.temperature_2m.toString() +
-                    Demo.weatherResponse.current_units.temperature_2m
+                    Demo.weatherResponse.current_units.temperature_2m,
+            fontSize = if (showCode) {
+                29.sp
+            } else {
+                15.sp
+            }
         )
         if(showCode) {
             Text(
