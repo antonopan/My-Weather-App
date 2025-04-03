@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -23,10 +24,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.nile.pantelis.myweatherapp.R
 import com.nile.pantelis.myweatherapp.data.Demo
 import com.nile.pantelis.myweatherapp.data.Wmo
 import com.nile.pantelis.myweatherapp.domain.utils.convertToDayName
@@ -67,22 +71,35 @@ fun MainScreen(
                     .clip(shape = RoundedCornerShape(16.dp))
                     .background(Color.Gray)
                     .fillMaxWidth()
-                    .horizontalScroll(rememberScrollState())
             ) {
-                Text(
+
+                Row(
                     modifier = Modifier
                         .padding(
                             horizontal = 8.dp,
                             vertical = 4.dp
                         ),
-                    text = "Hourly",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        painter = painterResource(R.drawable.schedule_24dp),
+                        contentDescription = stringResource(id = R.string.app_name),
+                    )
+
+                    Text(
+                        modifier = Modifier
+                            .padding(
+                                horizontal = 8.dp,
+                            ),
+                        text = "Hourly",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
 
                 Row(
-
-
+                    modifier=Modifier
+                        .horizontalScroll(rememberScrollState())
                 ) {
                     for (i in 1..12) {
                         WeatherDataView(showCode = false)
@@ -92,7 +109,7 @@ fun MainScreen(
 
 
 
-            Spacer(modifier = Modifier.height(14.dp))
+//            Spacer(modifier = Modifier.height(6.dp))
 
             Column(
                 modifier = Modifier
@@ -100,12 +117,28 @@ fun MainScreen(
                     .background(color = Color.Gray)
                     .fillMaxWidth()
             ) {
-                Text(
-                    modifier = Modifier.padding(8.dp),
-                    text = "This Week",
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold
-                )
+
+                Row(
+                    modifier = Modifier
+                        .padding(
+                            horizontal = 8.dp,
+//                            vertical = 4.dp
+                        ),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+
+                    Icon(
+                        painter = painterResource(R.drawable.calendar_month_24dp),
+                        contentDescription = stringResource(id = R.string.app_name),
+                    )
+
+                    Text(
+                        modifier = Modifier.padding(8.dp),
+                        text = "This Week",
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
 
                 Row(
 

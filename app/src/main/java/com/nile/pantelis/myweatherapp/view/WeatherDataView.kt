@@ -40,8 +40,10 @@ fun WeatherDataView(
             }
         )
         Icon(
-            painter = painterResource(R.drawable.rainy_24dp),
-            contentDescription = stringResource(id = R.string.app_name),
+            painter = painterResource(Wmo.codes[Demo.weatherResponse.current.weather_code]?.icon
+                ?: R.drawable.cloud_alert_24dp),
+            contentDescription = Wmo.codes[Demo.weatherResponse.current.weather_code]?.title
+                ?: "No retrieved data",
             modifier = Modifier.size(if (showCode) {
                 72.dp
             } else {
@@ -60,7 +62,8 @@ fun WeatherDataView(
         )
         if(showCode) {
             Text(
-                text = Wmo.codes[Demo.weatherResponse.current.weather_code]!!
+                text = Wmo.codes[Demo.weatherResponse.current.weather_code]?.title
+                    ?: "No retrieved data"
             )
         }
     }
@@ -68,7 +71,7 @@ fun WeatherDataView(
 
 @Preview(showBackground = true)
 @Composable
-fun WeatherDataViewPreiew(
+fun WeatherDataViewPreview(
 
 ) {
     WeatherDataView(
