@@ -44,7 +44,7 @@ fun WeatherDataView(
                 ?: R.drawable.cloud_alert_24dp),
             contentDescription = weatherIcon?.title
                 ?: "No retrieved data",
-            tint = Color.LightGray,
+            tint = Color.White,
             modifier = Modifier.size(if (showCode) {
                 72.dp
             } else {
