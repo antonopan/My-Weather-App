@@ -46,7 +46,7 @@ object BackgroundGradientWMO {
 
     private fun setBackgroundGradient(color: Color): Brush {
 
-        val gradient1 = adjustColorLightnessBy(color, -20f)
+        val gradient1 = adjustColorLightnessBy(color, 20f)
 
         return Brush.verticalGradient(listOf(gradient1, color))
     }
