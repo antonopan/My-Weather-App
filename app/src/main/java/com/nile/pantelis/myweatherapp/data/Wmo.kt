@@ -6,7 +6,7 @@ object Wmo {
     val codes = mapOf(
         0 to WmoInfo("Clear sky", R.drawable.clear_day_24dp),
         1 to WmoInfo("Mainly clear", R.drawable.clear_day_24dp), // clear day, bedtime
-        2 to WmoInfo("Partly cloudy", R.drawable.cloud_24dp), // partly cloudy day, nights stay
+        2 to WmoInfo("Partly cloudy", R.drawable.partly_cloudy_day_24dp), // partly cloudy day, nights stay
         3 to WmoInfo("Overcast", R.drawable.cloud_24dp), // partly cloudy day, nights stay
         45 to WmoInfo("Fog", R.drawable.foggy_24dp), // foggy
         48 to WmoInfo("Depositing rime fog", R.drawable.foggy_24dp), // foggy
@@ -67,4 +67,3 @@ object Wmo {
 //    )
 }
 
-public data class WmoInfo(val title: String, val icon: Int)
