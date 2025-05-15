@@ -36,7 +36,7 @@ fun WeatherDataView(
             text = if (showCode) {
                 convertToDayName(currentTime)
             } else {
-                convertToDayName(currentTime).take(3)
+                currentTime.takeLast(5)
             }
         )
         Icon(

@@ -41,6 +41,8 @@ android {
 
 dependencies {
 
+    val retrofit_version = "2.11.0"
+
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
@@ -58,4 +60,6 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.play.services.location)
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
 }
