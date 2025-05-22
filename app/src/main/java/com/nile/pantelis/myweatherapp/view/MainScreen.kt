@@ -40,6 +40,8 @@ import com.nile.pantelis.myweatherapp.data.Demo
 import com.nile.pantelis.myweatherapp.data.Wmo
 import com.nile.pantelis.myweatherapp.data.dtos.WeatherResponse
 import com.nile.pantelis.myweatherapp.data.service.WeatherRepository
+import com.nile.pantelis.myweatherapp.domain.helpers.WeatherDataViewMode
+import com.nile.pantelis.myweatherapp.domain.utils.getDailyTemperatures
 import com.nile.pantelis.myweatherapp.domain.utils.getTodayTemperatures
 import com.nile.pantelis.myweatherapp.domain.utils.mergeTemperatureAndUnit
 import com.nile.pantelis.myweatherapp.domain.wmo.BackgroundGradientWMO
@@ -49,11 +51,11 @@ fun MainScreen(
     modifier: Modifier = Modifier
 ) {
 
-    val background =
-        BackgroundGradientWMO.backgroundColor[Demo.weatherResponse.current.weather_code]
-            ?: Brush.sweepGradient(listOf(Color.LightGray, Color.Gray))
+
 
     var weather by remember { mutableStateOf<WeatherResponse?>(null) }
+
+
 
     LaunchedEffect(key1 = Unit) {
         // This runs once when the composable enters the composition
@@ -62,6 +64,11 @@ fun MainScreen(
     }
 
     if (weather != null) {
+
+        val background =
+            BackgroundGradientWMO.backgroundColor[weather!!.current.weather_code]
+                ?: Brush.sweepGradient(listOf(Color.LightGray, Color.Gray))
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -91,7 +98,7 @@ fun MainScreen(
                         weather!!.current.temperature_2m,
                         weather!!.current_units.temperature_2m
                     ),
-                    showCode = true
+                    showCode = WeatherDataViewMode.MainTemp
                 )
 
 
@@ -125,16 +132,16 @@ fun MainScreen(
                         modifier = Modifier.horizontalScroll(rememberScrollState())
                     ) {
 
-                        getTodayTemperatures(weather!!).forEach { (time, temp) ->
+                        getTodayTemperatures(weather!!).forEach { (time, code, temp) ->
                             Log.d("time", time)
                             WeatherDataView(
                                 currentTime = time,
-                                weatherIcon = Wmo.codes[weather!!.current.weather_code],
+                                weatherIcon = Wmo.codes[code],
                                 temperature = mergeTemperatureAndUnit(
                                     temp,
                                     weather!!.current_units.temperature_2m
                                 ),
-                                showCode = false
+                                showCode = WeatherDataViewMode.HourlyTemp
                             )
                         }
 //                        for (i in 1..getTodayTemperatures(weather!!).size) {
@@ -184,15 +191,16 @@ fun MainScreen(
                     Row(
                         modifier = Modifier.horizontalScroll(rememberScrollState())
                     ) {
-                        for (i in 1..6) {
+                        getDailyTemperatures(weather!!).forEach { (time, code, temp) ->
+//                            Log.d("time", time)
                             WeatherDataView(
-                                currentTime = weather!!.current.time,
-                                weatherIcon = Wmo.codes[weather!!.current.weather_code],
+                                currentTime = time,
+                                weatherIcon = Wmo.codes[code],
                                 temperature = mergeTemperatureAndUnit(
-                                    weather!!.current.temperature_2m,
+                                    temp,
                                     weather!!.current_units.temperature_2m
                                 ),
-                                showCode = false
+                                showCode = WeatherDataViewMode.WeeklyTemp
                             )
                         }
                     }

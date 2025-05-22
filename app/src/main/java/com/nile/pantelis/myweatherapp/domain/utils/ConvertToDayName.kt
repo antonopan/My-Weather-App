@@ -1,8 +1,10 @@
 package com.nile.pantelis.myweatherapp.domain.utils
 
+import androidx.compose.ui.text.TextStyle
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.time.DayOfWeek
+import java.time.LocalDate
 import java.util.Locale
 
 fun convertToDayName(dateTime: String): String {
@@ -19,3 +21,17 @@ fun convertToDayName(dateTime: String): String {
     return dayOfWeek.getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault())
 }
 
+
+fun convertDateToDayName(dateTime: String): String {
+    // Define the date-only pattern
+    val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+
+    // Parse the input string to LocalDate
+    val dateParsed = LocalDate.parse(dateTime, formatter)
+
+    // Get the day of the week
+    val dayOfWeek = dateParsed.dayOfWeek
+
+    // Return the full name of the day
+    return dayOfWeek.getDisplayName(java.time.format.TextStyle.FULL, Locale.getDefault())
+}

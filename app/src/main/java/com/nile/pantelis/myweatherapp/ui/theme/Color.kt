@@ -12,7 +12,7 @@ val Pink40 = Color(0xFF7D5260)
 
 val ClearDay1 = Color(0xffffc800)
 val ClearDay2 = Color(0xFF217ff3)
-val Storm = Color(0xff6a00ff)
+val Storm = Color(0xFF8065A2)
 val Snow = Color(0xffa4d7ef)
 val Rainy = Color(0xff889cce)
 val Cloudy = Color(0xffbfd4ca)

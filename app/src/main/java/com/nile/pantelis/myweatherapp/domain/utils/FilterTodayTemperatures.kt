@@ -1,17 +1,28 @@
 package com.nile.pantelis.myweatherapp.domain.utils
 
-import android.util.Log
 import com.nile.pantelis.myweatherapp.data.dtos.WeatherResponse
+import com.nile.pantelis.myweatherapp.domain.helpers.DailyWeatherPresenterData
 import java.time.LocalDate
 
-fun getTodayTemperatures(weatherResponse: WeatherResponse): List<Pair<String, Double>> {
-    val todayDate = LocalDate.now().toString() // e.g., "2025-05-15"
+fun getTodayTemperatures(weatherResponse: WeatherResponse): List<DailyWeatherPresenterData> {
+    val todayDate = LocalDate.now().toString()
+    val result = mutableListOf<DailyWeatherPresenterData>()
 
-    return weatherResponse.hourly.time
-        .mapIndexed { index, time ->
-            Pair(time, weatherResponse.hourly.temperature_2m[index])
+    for (i in weatherResponse.hourly.time.indices) {
+        val time = weatherResponse.hourly.time[i]
+        if (time.startsWith(todayDate)) {
+
+            val hourlyWeather = DailyWeatherPresenterData(
+                day = time,
+                weatherCode = weatherResponse.hourly.weather_code[i],
+                temp = weatherResponse.hourly.temperature_2m[i]
+            )
+            result.add(hourlyWeather)
+        } else if (time > todayDate) {
+            // Since the list is sorted, no more today's values beyond this point
+            break
         }
-        .filter { (time, _) ->
-            time.startsWith(todayDate) // Keep only today's values
-        }
+    }
+
+    return result
 }
