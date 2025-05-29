@@ -1,6 +1,7 @@
 package com.nile.pantelis.myweatherapp.data.service
 
 import android.util.Log
+import androidx.core.location.LocationManagerCompat.getCurrentLocation
 import com.nile.pantelis.myweatherapp.data.dtos.WeatherResponse
 import org.jetbrains.annotations.Debug
 
@@ -12,6 +13,7 @@ object WeatherRepository: WeatherAPI  {
         val response = api.getWeatherData(lat, long)
 
         Log.d("TAG", "Received weather data: $response")
+        Log.d("TAG", "")
 
         return response
     }

@@ -4,15 +4,15 @@ import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.CircularProgressIndicator
@@ -36,7 +36,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.nile.pantelis.myweatherapp.R
-import com.nile.pantelis.myweatherapp.data.Demo
 import com.nile.pantelis.myweatherapp.data.Wmo
 import com.nile.pantelis.myweatherapp.data.dtos.WeatherResponse
 import com.nile.pantelis.myweatherapp.data.service.WeatherRepository
@@ -45,10 +44,15 @@ import com.nile.pantelis.myweatherapp.domain.utils.getDailyTemperatures
 import com.nile.pantelis.myweatherapp.domain.utils.getTodayTemperatures
 import com.nile.pantelis.myweatherapp.domain.utils.mergeTemperatureAndUnit
 import com.nile.pantelis.myweatherapp.domain.wmo.BackgroundGradientWMO
+import com.nile.pantelis.myweatherapp.ui.theme.ClearDay1
+import com.nile.pantelis.myweatherapp.ui.theme.Storm
 
 @Composable
 fun MainScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    latitude: Double?,
+    longitude: Double?
+
 ) {
 
 
@@ -57,10 +61,10 @@ fun MainScreen(
 
 
 
-    LaunchedEffect(key1 = Unit) {
-        // This runs once when the composable enters the composition
-//        latitude=35.3279&longitude=25.1434&
-        weather = WeatherRepository.getWeatherData(35.3279, 25.1434)
+    LaunchedEffect(latitude, longitude) {
+        if (latitude != null && longitude != null) {
+            weather = WeatherRepository.getWeatherData(latitude, longitude)
+        }
     }
 
     if (weather != null) {
@@ -144,22 +148,9 @@ fun MainScreen(
                                 showCode = WeatherDataViewMode.HourlyTemp
                             )
                         }
-//                        for (i in 1..getTodayTemperatures(weather!!).size) {
-//                            WeatherDataView(
-//                                currentTime = weather!!.current.time,  //Demo.weatherResponse.current.time,
-//                                weatherIcon = Wmo.codes[weather!!.current.weather_code], //Demo.weatherResponse.current.weather_code
-//                                temperature = mergeTemperatureAndUnit(
-//                                    weather!!.current.temperature_2m,
-//                                    weather!!.current_units.temperature_2m
-//                                ),
-//                                showCode = false
-//                            )
-//                        }
                     }
                 }
 
-
-//            Spacer(modifier = Modifier.height(6.dp))
 
                 Column(
                     modifier = Modifier
@@ -192,7 +183,6 @@ fun MainScreen(
                         modifier = Modifier.horizontalScroll(rememberScrollState())
                     ) {
                         getDailyTemperatures(weather!!).forEach { (time, code, temp) ->
-//                            Log.d("time", time)
                             WeatherDataView(
                                 currentTime = time,
                                 weatherIcon = Wmo.codes[code],
@@ -204,20 +194,29 @@ fun MainScreen(
                             )
                         }
                     }
-//                Row(
-//
-//                ) {
-//                    for (i in 1..6) {
-//                        WeatherDataView(showCode = false)
-//                    }
-//                }
                 }
 
             }
 
         }
     } else {
-        CircularProgressIndicator()
+       Box(
+           modifier = Modifier
+//               .background(ClearDay1)
+               .fillMaxSize(),
+           contentAlignment = Alignment.Center
+       ) {
+           CircularProgressIndicator(
+               modifier = Modifier
+                   .padding(36.dp)
+                   .fillMaxSize()
+                   .aspectRatio(1f),
+               strokeWidth = 12.dp,
+               color = Storm
+           )
+       }
+
+
     }
 
 
@@ -228,5 +227,9 @@ fun MainScreen(
 fun MainScreenPreview(
 
 ) {
-    MainScreen()
+    MainScreen(
+
+        latitude = 35.3279,
+        longitude = 25.1434,
+    )
 }
